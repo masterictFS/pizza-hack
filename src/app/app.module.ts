@@ -12,6 +12,7 @@ import {PizzasCompareComponent} from './pizzas/pizzas-compare/pizzas-compare.com
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {PizzaService} from './pizzas/services/pizza.service';
+import {ToppingsService} from './pizzas/services/toppings.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {PizzaService} from './pizzas/services/pizza.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [PizzaService],
+  providers: [PizzaService, ToppingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

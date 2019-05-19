@@ -4,7 +4,11 @@ export class Topping {
     public name: string
   ) {}
 
-  static createToppingObjs(toppings: Topping[]) {
-    return toppings.map(topping => new Topping(topping.id, topping.name));
+  static createToppingObjsFromArray(toppings: Topping[]) {
+    return toppings.map(topping => Topping.createToppingObj(topping));
+  }
+
+  static createToppingObj(topping: Topping): Topping {
+    return new Topping(topping.id, topping.name);
   }
 }

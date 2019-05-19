@@ -1,11 +1,11 @@
 export class PizzaPrice {
   constructor(
-    size: Size,
-    price: number
+    public size: Size,
+    public price: number
   ) {}
 
   static createPriceObjs(pizzaPrices: PizzaPrice[]) {
-    // return pizzaPrices.map(prices => new PizzaPrice(prices.size, prices.price));
+    return pizzaPrices.map(prices => new PizzaPrice(prices.size, prices.price));
   }
 }
 

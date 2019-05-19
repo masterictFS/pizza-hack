@@ -10,7 +10,7 @@ export class Pizza {
   ) {}
 
   static createPizzaObject(pizza: Pizza) {
-    return new Pizza(pizza.id, pizza.name, Topping.createToppingObjs(pizza.toppings), pizza.prices);
+    return new Pizza(pizza.id, pizza.name, Topping.createToppingObjsFromArray(pizza.toppings), PizzaPrice.createPriceObjs(pizza.prices));
   }
 
   getToppingsNames(): string[] {
@@ -25,5 +25,10 @@ export class Pizza {
 
   clone() {
     return new Pizza(-1, this.name, this.toppings.slice(), this.prices.slice());
+  }
+
+  removeToppingById(id: number) {
+    const i = this.toppings.findIndex(topping => topping.id === id);
+    this.toppings.splice(i, 1);
   }
 }

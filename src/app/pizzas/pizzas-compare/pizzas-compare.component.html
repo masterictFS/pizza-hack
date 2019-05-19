@@ -1,9 +1,39 @@
-<div class="container">
+<div
+  *ngIf="pizzaToBeCompared else noPizza"
+  class="col-md-12">
+  <h3>{{pizzaToBeCompared.name}}</h3>
   <div class="row">
-    <div *ngIf="pizzaToBeCompared else noPizza" class="col-md-12">
-      {{pizzaToBeCompared.name}}
-      <br>
-      <button class="btn btn-primary" (click)="addSalamino()">Salamino</button>
+    <div class="col-md-12 list-group">
+      <div
+        *ngFor="let topping of pizzaToBeCompared.toppings"
+        class="list-group-item clearfix">
+        {{topping.name}}
+        <span class="pull-right">
+          <span class="btn btn-xs btn-default" (click)="removeToppingById(topping.id)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+    <form (ngSubmit)="onAddIngredient()" #form="ngForm">
+      <label for="topping">New Topping</label>
+      <div class="input-group">
+        <select
+          class="form-control"
+          id="topping"
+          name="topping"
+          required
+          ngModel>
+          <option *ngFor="let topping of getUnusedToppings()" value="{{topping.id}}">{{topping.name}}</option>
+        </select>
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-success" [disabled]="!form.valid">Add</button>
+        </span>
+      </div>
+    </form>
     </div>
   </div>
 </div>

@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Pizza} from '../models/pizza.model';
-import {ToppingService} from './topping.service';
-import {Response} from '@angular/http';
+import {ToppingsService} from './toppings.service';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class PizzaService {
 
-  constructor(private toppingService: ToppingService, private http: HttpClient) { }
+  constructor(private toppingService: ToppingsService, private http: HttpClient) { }
 
   /*private pizzas: Pizza[] = [
     new Pizza(1, 'Margherita', [
@@ -33,7 +32,7 @@ export class PizzaService {
     return this.http.get<Pizza[]>('http://localhost:8080/pizzas')
       .pipe(map(
         (pizzas) => {
-          const pizzaObjs = pizzas.map(pizza => Pizza.createPizzaObject(pizza))
+          const pizzaObjs = pizzas.map(pizza => Pizza.createPizzaObject(pizza));
           this.pizzas = pizzaObjs;
           return pizzaObjs;
         }
