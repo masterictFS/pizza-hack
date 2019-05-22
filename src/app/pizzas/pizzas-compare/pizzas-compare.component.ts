@@ -70,4 +70,29 @@ export class PizzasCompareComponent implements OnInit {
   setComparisonSize(event) {
     this.selectedSize = event.target.value;
   }
+
+  getComparedPizzas() {
+    const compare = this.allPizzasList.slice()
+    /*  .map(pizza => pizza.compareToOther(this.pizzaToBeCompared))
+      .forEach(pc => {
+        pc.newPrice = pc.originalPizza.getPriceForSize(this.selectedSize) + pc.missing.length * this.extraToppingPrice;
+      })*/
+    ;
+
+   /* const test = compare.slice()
+      .map(pizza => pizza.compareToOther(this.pizzaToBeCompared))
+      .forEach(pc => {
+        pc.newPrice = pc.originalPizza.getPriceForSize(Size[this.selectedSize]) + pc.missing.length * this.extraToppingPrice;
+      })
+
+    console.log(test);*/
+
+    /*console.log(this.selectedSize);
+    console.log(Size[this.selectedSize]);
+    console.log(this.pizzaToBeCompared.prices);*/
+    console.log(this.pizzaToBeCompared.getPriceForSize(Size[this.selectedSize]));
+
+    //console.log(compare);
+    return compare;
+  }
 }

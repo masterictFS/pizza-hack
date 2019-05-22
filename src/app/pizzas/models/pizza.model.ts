@@ -1,5 +1,5 @@
 import {Topping} from './topping.model';
-import {PizzaPrice} from './pizza-price.model';
+import {PizzaPrice, Size} from './pizza-price.model';
 
 export class Pizza {
   constructor(
@@ -16,6 +16,10 @@ export class Pizza {
 
   getToppingsNames(): string[] {
     return this.toppings.map(t => t.name);
+  }
+
+  getPriceForSize(size: string): number {
+    return this.prices.find(p => p.size === size).price;
   }
 
   getPricesString(): string[] {
@@ -47,9 +51,13 @@ export class Pizza {
     return otherPizza.missingToppingsFromOther(this);
   }
 
-  compareToOther(otherPizza: Pizza): {missing: Topping[], extra: Topping[]} {
-    // console.log({'missing': this.missingToppingsFromOther(otherPizza), 'extra': this.extraToppingToOther(otherPizza)})
-    return {'missing': this.missingToppingsFromOther(otherPizza), 'extra': this.extraToppingToOther(otherPizza)};
+  compareToOther(otherPizza: Pizza): PizzaCompareResult {
+    return new PizzaCompareResult(
+      this,
+      otherPizza,
+      this.missingToppingsFromOther(otherPizza),
+      this.extraToppingToOther(otherPizza)
+    );
   }
 
   comparisonString(otherPizza: Pizza): string {
@@ -58,5 +66,20 @@ export class Pizza {
     const missing = JSON.stringify(comparison.missing);
 
     return 'A ' + this.name + ' pizza is a ' + otherPizza.name + ' with ' + extra + ' and without ' + missing;
+  }
+}
+
+export class PizzaCompareResult {
+  originalPizza: Pizza;
+  comparedPizza: Pizza;
+  missing: Topping[];
+  extra: Topping[];
+  newPrice = 0;
+
+  constructor(originalPizza: Pizza, comparedPizza: Pizza, missing: Topping[], extra: Topping[]) {
+    this.originalPizza = originalPizza;
+    this.comparedPizza = comparedPizza;
+    this.missing = missing;
+    this.extra = extra;
   }
 }
