@@ -39,9 +39,42 @@
     </form>
     </div>
   </div>
-  <div class="row ">
 
+
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Fine-tune your hacks</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label for="extraprice">Extra topping price</label>
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="glyphicon glyphicon-euro"></i>
+        </span>
+        <input class="form-control" id="extraprice" type="number" [(ngModel)]="extraToppingPrice">
       </div>
+    </div>
+    <div class="col-md-6">
+      <label for="size">Pick your size</label>
+      <div class="input-group">
+        <div class="btn-group" role="group" id="size" (click)="setComparisonSize($event)">
+          <button
+            *ngFor="let size of sizeTypes | enumToArray"
+            class="btn btn-primary" value="{{sizeTypes[size]}}">{{size}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="col-md-12"
+      *ngFor="let pizzaCompare of getComparedPizzas()">
+      {{pizzaCompare.printToString()}} - {{pizzaCompare.newPrice}}
+    </div>
+  </div>
 
 </div>
 <ng-template #noPizza>

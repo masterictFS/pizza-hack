@@ -16,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {PizzaService} from './pizzas/services/pizza.service';
 import {ToppingsService} from './pizzas/services/toppings.service';
+import { EnumToArrayPipe } from './shared/enum-to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {ToppingsService} from './pizzas/services/toppings.service';
     PizzasComponent,
     ErrorPageComponent,
     PizzasListComponent,
-    PizzasCompareComponent
+    PizzasCompareComponent,
+    EnumToArrayPipe
   ],
   imports: [
     BrowserModule,

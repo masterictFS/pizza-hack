@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Pizza} from '../models/pizza.model';
+import {Pizza, PizzaCompareResult} from '../models/pizza.model';
+import {Size} from '../models/pizza-price.model';
 import {PizzaService} from '../services/pizza.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
@@ -13,11 +14,16 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./pizzas-compare.component.css']
 })
 export class PizzasCompareComponent implements OnInit {
-  pizzaToBeCompared: Pizza;
-  allToppingsList: Topping[] = [];
   paramsSubscription: Subscription;
-
   @ViewChild('form') ingredientForm: NgForm;
+
+  pizzaToBeCompared: Pizza;
+  allPizzasList: Pizza[] = [];
+  allToppingsList: Topping[] = [];
+  sizeTypes = Size;
+
+  extraToppingPrice = 0.5;
+  selectedSize = Size.M;
 
   constructor(private pizzaService: PizzaService, private toppingsService: ToppingsService, private route: ActivatedRoute) { }
 
@@ -33,6 +39,12 @@ export class PizzasCompareComponent implements OnInit {
     this.toppingsService.getToppings()
       .subscribe(
         (response) => this.allToppingsList = response,
+        (error) => console.log(error)
+      );
+
+    this.pizzaService.getPizzas()
+      .subscribe(
+        (response) => this.allPizzasList = response,
         (error) => console.log(error)
       );
   }
@@ -53,5 +65,25 @@ export class PizzasCompareComponent implements OnInit {
     if (newTopping) {
       this.pizzaToBeCompared.addTopping(newTopping);
     }
+  }
+
+  setComparisonSize(event) {
+    this.selectedSize = event.target.value;
+  }
+
+  getComparedPizzas() {
+    // getting compare array
+    const compare = this.allPizzasList.slice()
+      .map(pizza => pizza.compareToOther(this.pizzaToBeCompared));
+
+    // getting new prices based on size, number of extra toppings and extra topping price
+    compare.forEach(pc => {
+      pc.newPrice = pc.originalPizza.getPriceForSize(Size[this.selectedSize]) + pc.missing.length * this.extraToppingPrice;
+    });
+
+    // sorting on price and least additions
+    compare.sort((a, b) => PizzaCompareResult.cheapestLeastAdditions(a, b));
+
+    return compare;
   }
 }
