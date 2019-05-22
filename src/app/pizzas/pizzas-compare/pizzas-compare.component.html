@@ -55,11 +55,10 @@
     <div class="col-md-6">
       <label for="size">Pick your size</label>
       <div class="input-group">
-        <div class="btn-group" role="group" id="size">
-          <!--TODO create a size enum and dynamically get values?-->
-          <button type="button" class="btn btn-primary">S</button>
-          <button type="button" class="btn btn-primary">M</button>
-          <button type="button" class="btn btn-primary">L</button>
+        <div class="btn-group" role="group" id="size" (click)="setComparisonSize($event)">
+          <button
+            *ngFor="let size of sizeTypes | enumToArray"
+            class="btn btn-primary" value="{{sizeTypes[size]}}">{{size}}</button>
         </div>
       </div>
     </div>

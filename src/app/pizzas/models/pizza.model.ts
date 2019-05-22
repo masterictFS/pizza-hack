@@ -19,7 +19,9 @@ export class Pizza {
   }
 
   getPricesString(): string[] {
-    return this.prices.map(p => p.size + ': ' + p.price);
+    const pricesToBeSorted = this.prices.slice();
+    pricesToBeSorted.sort((a, b) => PizzaPrice.sizeComparator(a, b));
+    return pricesToBeSorted.map(p => p.size + ': ' + p.price);
   }
 
   addTopping(topping: Topping): number {

@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Pizza} from '../models/pizza.model';
+import {Size} from '../models/pizza-price.model';
 import {PizzaService} from '../services/pizza.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
@@ -18,10 +19,11 @@ export class PizzasCompareComponent implements OnInit {
 
   pizzaToBeCompared: Pizza;
   allPizzasList: Pizza[] = [];
-
   allToppingsList: Topping[] = [];
+  sizeTypes = Size;
 
   extraToppingPrice = 0.5;
+  selectedSize = Size.M;
 
   constructor(private pizzaService: PizzaService, private toppingsService: ToppingsService, private route: ActivatedRoute) { }
 
@@ -63,5 +65,9 @@ export class PizzasCompareComponent implements OnInit {
     if (newTopping) {
       this.pizzaToBeCompared.addTopping(newTopping);
     }
+  }
+
+  setComparisonSize(event) {
+    this.selectedSize = event.target.value;
   }
 }

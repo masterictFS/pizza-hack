@@ -7,8 +7,20 @@ export class PizzaPrice {
   static createPriceObjs(pizzaPrices: PizzaPrice[]) {
     return pizzaPrices.map(prices => new PizzaPrice(prices.size, prices.price));
   }
+
+  static sizeComparator(a: PizzaPrice, b: PizzaPrice): number {
+    if (Size[a.size] < Size[b.size]) {
+      return -1;
+    } else if (Size[a.size] === Size[b.size]) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
 }
 
-enum Size {
-  S, M, L
+export enum Size {
+  S,
+  M,
+  L
 }
