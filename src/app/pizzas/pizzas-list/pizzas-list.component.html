@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row tc center">
   <div class="col-xs-12 list-group">
     <a
       *ngFor="let pizza of pizzas"
@@ -7,7 +7,9 @@
       [routerLink]="pizza.id"
       routerLinkActive="active">
       <!--TODO sort using new priority field for toppings names-->
-      {{pizza.name}} - {{pizza.getToppingsNames()}} - {{pizza.getPricesString()}}
+
+  <b>{{pizza.name}}</b> - {{pizza.getToppingsNames()}} - {{pizza.getPricesString()}}
+
     </a>
   </div>
 </div>
