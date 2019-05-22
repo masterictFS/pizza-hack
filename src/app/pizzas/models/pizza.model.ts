@@ -18,6 +18,7 @@ export class Pizza {
     return this.toppings.map(t => t.name);
   }
 
+  // TODO maybe figure out how to do this properly without the nasty exception
   getPriceForSize(size: string): number {
     return this.prices.find(p => p.size === size).price;
   }
@@ -81,5 +82,20 @@ export class PizzaCompareResult {
     this.comparedPizza = comparedPizza;
     this.missing = missing;
     this.extra = extra;
+  }
+
+  static cheapestLeastAdditions(a: PizzaCompareResult, b: PizzaCompareResult) {
+    if (a.newPrice !== b.newPrice) {
+      return a.newPrice - b.newPrice;
+    } else if (a.missing.length !== b.missing.length) {
+      return a.missing.length - b.missing.length;
+    }
+    return a.extra.length - b.extra.length;
+  }
+
+  printToString(): string {
+    return this.originalPizza.name
+      + ' with extra ' + JSON.stringify(this.missing.map(t => t.name))
+      + ' and without ' + JSON.stringify(this.extra.map(t => t.name));
   }
 }

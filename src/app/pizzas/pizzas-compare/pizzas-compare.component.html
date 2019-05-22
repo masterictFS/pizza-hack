@@ -66,8 +66,8 @@
   <div class="row">
     <div
       class="col-md-12"
-      *ngFor="let pizza of getComparedPizzas()">
-      {{pizzaToBeCompared.comparisonString(pizza)}}
+      *ngFor="let pizzaCompare of getComparedPizzas()">
+      {{pizzaCompare.printToString()}} - {{pizzaCompare.newPrice}}
     </div>
   </div>
 </div>

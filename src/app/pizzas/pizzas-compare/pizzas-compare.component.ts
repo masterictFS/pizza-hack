@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Pizza} from '../models/pizza.model';
+import {Pizza, PizzaCompareResult} from '../models/pizza.model';
 import {Size} from '../models/pizza-price.model';
 import {PizzaService} from '../services/pizza.service';
 import {Subscription} from 'rxjs';
@@ -72,27 +72,18 @@ export class PizzasCompareComponent implements OnInit {
   }
 
   getComparedPizzas() {
+    // getting compare array
     const compare = this.allPizzasList.slice()
-    /*  .map(pizza => pizza.compareToOther(this.pizzaToBeCompared))
-      .forEach(pc => {
-        pc.newPrice = pc.originalPizza.getPriceForSize(this.selectedSize) + pc.missing.length * this.extraToppingPrice;
-      })*/
-    ;
+      .map(pizza => pizza.compareToOther(this.pizzaToBeCompared));
 
-   /* const test = compare.slice()
-      .map(pizza => pizza.compareToOther(this.pizzaToBeCompared))
-      .forEach(pc => {
-        pc.newPrice = pc.originalPizza.getPriceForSize(Size[this.selectedSize]) + pc.missing.length * this.extraToppingPrice;
-      })
+    // getting new prices based on size, number of extra toppings and extra topping price
+    compare.forEach(pc => {
+      pc.newPrice = pc.originalPizza.getPriceForSize(Size[this.selectedSize]) + pc.missing.length * this.extraToppingPrice;
+    });
 
-    console.log(test);*/
+    // sorting on price and least additions
+    compare.sort((a, b) => PizzaCompareResult.cheapestLeastAdditions(a, b));
 
-    /*console.log(this.selectedSize);
-    console.log(Size[this.selectedSize]);
-    console.log(this.pizzaToBeCompared.prices);*/
-    console.log(this.pizzaToBeCompared.getPriceForSize(Size[this.selectedSize]));
-
-    //console.log(compare);
     return compare;
   }
 }
