@@ -18,6 +18,10 @@ export class Pizza {
     return this.toppings.map(t => t.name);
   }
 
+  getPricesString(): string[] {
+    return this.prices.map(p => p.size + ': ' + p.price);
+  }
+
   addTopping(topping: Topping): number {
     return !this.toppings.find((t) => t.id === topping.id)
       ? this.toppings.push(topping)
@@ -31,5 +35,26 @@ export class Pizza {
   removeToppingById(id: number) {
     const i = this.toppings.findIndex(topping => topping.id === id);
     this.toppings.splice(i, 1);
+  }
+
+  missingToppingsFromOther(otherPizza: Pizza): Topping[] {
+    return otherPizza.toppings.filter(topping => !this.toppings.find((t) => t.id === topping.id));
+  }
+
+  extraToppingToOther(otherPizza: Pizza): Topping[] {
+    return otherPizza.missingToppingsFromOther(this);
+  }
+
+  compareToOther(otherPizza: Pizza): {missing: Topping[], extra: Topping[]} {
+    // console.log({'missing': this.missingToppingsFromOther(otherPizza), 'extra': this.extraToppingToOther(otherPizza)})
+    return {'missing': this.missingToppingsFromOther(otherPizza), 'extra': this.extraToppingToOther(otherPizza)};
+  }
+
+  comparisonString(otherPizza: Pizza): string {
+    const comparison = this.compareToOther(otherPizza);
+    const extra = JSON.stringify(comparison.extra);
+    const missing = JSON.stringify(comparison.missing);
+
+    return 'A ' + this.name + ' pizza is a ' + otherPizza.name + ' with ' + extra + ' and without ' + missing;
   }
 }

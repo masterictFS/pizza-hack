@@ -13,11 +13,15 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./pizzas-compare.component.css']
 })
 export class PizzasCompareComponent implements OnInit {
-  pizzaToBeCompared: Pizza;
-  allToppingsList: Topping[] = [];
   paramsSubscription: Subscription;
-
   @ViewChild('form') ingredientForm: NgForm;
+
+  pizzaToBeCompared: Pizza;
+  allPizzasList: Pizza[] = [];
+
+  allToppingsList: Topping[] = [];
+
+  extraToppingPrice = 0.5;
 
   constructor(private pizzaService: PizzaService, private toppingsService: ToppingsService, private route: ActivatedRoute) { }
 
@@ -33,6 +37,12 @@ export class PizzasCompareComponent implements OnInit {
     this.toppingsService.getToppings()
       .subscribe(
         (response) => this.allToppingsList = response,
+        (error) => console.log(error)
+      );
+
+    this.pizzaService.getPizzas()
+      .subscribe(
+        (response) => this.allPizzasList = response,
         (error) => console.log(error)
       );
   }
