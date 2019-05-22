@@ -15,6 +15,7 @@ export class PizzasListComponent implements OnInit {
   constructor(private pizzaService: PizzaService) {}
 
   ngOnInit() {
+    // TODO sort using new priority field
     this.pizzaService.getPizzas()
       .subscribe(
         (response) => this.pizzas = response,

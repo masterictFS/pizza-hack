@@ -2,6 +2,7 @@ export class Topping {
   constructor(
     public id: number,
     public name: string
+    // TODO add a priority field to influence sorting: sort first by priority, then alphabetically
   ) {}
 
   static createToppingObjsFromArray(toppings: Topping[]) {
