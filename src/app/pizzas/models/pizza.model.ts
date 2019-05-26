@@ -1,5 +1,5 @@
 import {Topping} from './topping.model';
-import {PizzaPrice, Size} from './pizza-price.model';
+import {PizzaPrice} from './pizza-price.model';
 
 export class Pizza {
   constructor(
@@ -18,8 +18,14 @@ export class Pizza {
     return this.toppings.map(t => t.name);
   }
 
+  hasPriceForSize(size: string): boolean {
+    // @ts-ignore
+    return Boolean(this.prices.find(p => p.size === size));
+  }
+
   // TODO maybe figure out how to do this properly without the nasty exception
   getPriceForSize(size: string): number {
+    // @ts-ignore
     return this.prices.find(p => p.size === size).price;
   }
 
