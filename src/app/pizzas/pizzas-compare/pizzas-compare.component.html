@@ -2,8 +2,11 @@
   *ngIf="pizzaToBeCompared else noPizza"
   class="col-md-12 row">
 
-    <h3 class="f3 b lh-title mb1 center tc">{{pizzaToBeCompared.name}}</h3>
-    
+  <div class="f3 b lh-title mb1 center tc">
+    <h3>{{pizzaToBeCompared.name}}</h3>
+    <button class="btn btn-success" (click)="savePizza(pizzaToBeCompared)">save me</button>
+  </div>
+
   <div class="row tc center">
     <div class="col-md-12 list-group">
       <div

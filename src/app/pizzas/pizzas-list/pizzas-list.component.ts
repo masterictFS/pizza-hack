@@ -1,7 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Pizza} from '../models/pizza.model';
-import {PizzaService} from '../services/pizza.service';
-import {Topping} from '../models/topping.model';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -9,14 +7,14 @@ import {FormControl} from '@angular/forms';
   templateUrl: './pizzas-list.component.html',
   styleUrls: ['./pizzas-list.component.css']
 })
-export class PizzasListComponent implements OnInit {
-  originalPizzas: Pizza[];
-  pizzas: Pizza[];
-  toppings: Topping[];
+export class PizzasListComponent {
+  @Input() pizzas: Pizza[];
+  @Input() originalPizzas: Pizza[];
+  @Input() isDefaultPizza: boolean;
 
   filter = new FormControl('');
 
-  constructor(private pizzaService: PizzaService) {
+  constructor() {
     this.filter.valueChanges.subscribe(
       (response) => {
         this.pizzas = this.originalPizzas.filter(p => p.containsAll(response));
@@ -24,18 +22,4 @@ export class PizzasListComponent implements OnInit {
       (error) => console.log(error)
     );
   }
-
-  ngOnInit() {
-    // TODO sort using new priority field
-    this.pizzaService.getPizzas()
-      .subscribe(
-        (response) => {
-          response = response.sort((a, b) => a < b ? -1 : +(a > b));
-          this.originalPizzas = response;
-          this.pizzas = response;
-        },
-        (error) => console.log(error)
-      );
-  }
-
 }

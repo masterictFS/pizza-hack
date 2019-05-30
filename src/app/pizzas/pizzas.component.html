@@ -1,7 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-7">
-      <app-pizzas-list></app-pizzas-list>
+      <app-pizzas-list [pizzas]="userPizzas" [originalPizzas]="originalUserPizzas"
+        [isDefaultPizza]="false"></app-pizzas-list>
+      <app-pizzas-list [pizzas]="pizzas" [originalPizzas]="originalPizzas"
+        [isDefaultPizza]="true"></app-pizzas-list>
     </div>
     <div class="col-md-5">
       <router-outlet></router-outlet>

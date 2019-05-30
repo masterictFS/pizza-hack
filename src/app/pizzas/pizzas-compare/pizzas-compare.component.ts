@@ -31,7 +31,7 @@ export class PizzasCompareComponent implements OnInit {
     this.paramsSubscription = this.route.params.subscribe(
       (params: Params) => {
         this.pizzaToBeCompared = this.pizzaService.getPizzaById(+params['id']);
-        this.pizzaToBeCompared.name = 'My new ' + this.pizzaToBeCompared.name;
+        this.pizzaToBeCompared.name = this.getNewName();
       }
     );
 
@@ -87,5 +87,25 @@ export class PizzasCompareComponent implements OnInit {
     compare.sort((a, b) => PizzaCompareResult.cheapestLeastAdditions(a, b));
 
     return compare;
+  }
+
+  savePizza(pizza: Pizza) {
+    this.pizzaService.savePizza(pizza).subscribe(
+      () => this.pizzaService.getPizzas(),
+      (error) => console.log(error)
+    );
+  }
+
+  getNewName(): string {
+    if (!this.pizzaToBeCompared.name.startsWith('My new ')) {
+      return 'My new ' + this.pizzaToBeCompared.name;
+    } else if (this.pizzaToBeCompared.name.match(/v[0-9]+/g)) {
+      const suffix = this.pizzaToBeCompared.name.match(/v[0-9]+/g)[0];
+      let number = +suffix.split('v')[1];
+      number++;
+      return this.pizzaToBeCompared.name.split(suffix)[0] + 'v' + number;
+    } else {
+      return this.pizzaToBeCompared.name + ' v2';
+    }
   }
 }

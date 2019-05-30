@@ -15,7 +15,7 @@
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Toppings</th>
-        <th scope="col">Prices</th>
+        <th *ngIf="isDefaultPizza" scope="col">Prices</th>
       </tr>
       </thead>
       <tbody>
@@ -28,7 +28,7 @@
           <ngb-highlight [result]="pizza.name" [term]="filter.value"></ngb-highlight>
         </td>
         <td><ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value"></ngb-highlight></td>
-        <td><ngb-highlight [result]="pizza.prices | pricesToString" [term]="filter.value"></ngb-highlight></td>
+        <td *ngIf="isDefaultPizza"><ngb-highlight [result]="pizza.prices | pricesToString" [term]="filter.value"></ngb-highlight></td>
       </tr>
       </tbody>
     </table>

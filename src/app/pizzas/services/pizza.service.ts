@@ -7,26 +7,10 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class PizzaService {
 
-  constructor(private toppingService: ToppingsService, private http: HttpClient) { }
-
-  /*private pizzas: Pizza[] = [
-    new Pizza(1, 'Margherita', [
-      this.toppingService.getToppingByName('Pomodoro'),
-      this.toppingService.getToppingByName('Mozzarella')
-    ], []),
-    new Pizza(2, 'Napoli', [
-      this.toppingService.getToppingByName('Pomodoro'),
-      this.toppingService.getToppingByName('Mozzarella'),
-      this.toppingService.getToppingByName('Acciughe')
-    ], []),
-    new Pizza(3, 'Prosciutto', [
-      this.toppingService.getToppingByName('Pomodoro'),
-      this.toppingService.getToppingByName('Mozzarella'),
-      this.toppingService.getToppingByName('Prosciutto')
-    ], [])
-  ];*/
+  constructor(private toppingService: ToppingsService, private http: HttpClient) {}
 
   private pizzas: Pizza[];
+  private userPizzas: Pizza[];
 
   getPizzas() {
     return this.http.get<Pizza[]>('http://localhost:8080/pizzas')
@@ -39,9 +23,38 @@ export class PizzaService {
       ));
   }
 
+  getUserPizzas(userId: number) {
+    return this.http.get<Pizza[]>('http://localhost:8080/user_pizzas/' + userId)
+      .pipe(map(
+        (pizzas) => {
+          const pizzaObjs = pizzas.map(pizza => Pizza.createPizzaObject(pizza));
+          this.userPizzas = pizzaObjs;
+          return pizzaObjs;
+        }
+      ));
+  }
+
   getPizzaById(id: number): Pizza {
+    let res: Pizza;
     if (this.pizzas) {
-      return this.pizzas.filter(pizza => pizza.id === id)[0].clone();
+      res = this.pizzas.find(pizza => pizza.id === id);
+      if (res) {
+        return res = res.clone();
+      }
     }
+    if (this.userPizzas) {
+      res = this.userPizzas.find(pizza => pizza.id === id);
+      if (res) {
+        return res.clone();
+      }
+    }
+  }
+
+  savePizza(pizza: Pizza) {
+    return this.http.post('http://localhost:8080/pizzas', {
+      'name': pizza.name,
+      'toppings_ids': pizza.toppings.map(t => t.id),
+      'user_id': 5
+    });
   }
 }
