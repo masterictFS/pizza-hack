@@ -13,11 +13,12 @@ import {ErrorPageComponent} from './error-page/error-page.component';
 import {PizzasListComponent} from './pizzas/pizzas-list/pizzas-list.component';
 import {PizzasCompareComponent} from './pizzas/pizzas-compare/pizzas-compare.component';
 import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PizzaService} from './pizzas/services/pizza.service';
 import {ToppingsService} from './pizzas/services/toppings.service';
 import { EnumToArrayPipe } from './shared/enum-to-array.pipe';
 import { ToppingsToString } from './shared/toppings-to-string';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { ToppingsToString } from './shared/toppings-to-string';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [PizzaService, ToppingsService],
   bootstrap: [AppComponent]

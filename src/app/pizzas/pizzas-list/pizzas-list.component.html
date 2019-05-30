@@ -1,15 +1,37 @@
 <div class="row tc center">
   <div class="col-xs-12 list-group">
-    <a
-      *ngFor="let pizza of pizzas"
-      class="list-group-item clearfix"
-      style="cursor: pointer"
-      [routerLink]="pizza.id"
-      routerLinkActive="active">
-      <!--TODO sort using new priority field for toppings names-->
 
-  <b>{{pizza.name}}</b> - {{pizza.getToppingsNames()}} - {{pizza.getPricesString()}}
+    <!--TODO sort using new priority field for toppings names-->
+    <form>
+      <div class="form-group form-inline">
+        <!--TODO for some reason labels don't show up-->
+        <label for="search">Search me pls</label>
+        <input class="form-control ml-2" type="text" id="search" [formControl]="filter"/>
+      </div>
+    </form>
 
-    </a>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Toppings</th>
+        <th scope="col">Prices</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let pizza of pizzas; let i = index"
+        style="cursor: pointer"
+        [routerLink]="pizza.id.toString()"
+        routerLinkActive="active">
+        <td>
+          <ngb-highlight [result]="pizza.name" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td><ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value"></ngb-highlight></td>
+        <td><ngb-highlight [result]="pizza.getPricesString()" [term]="filter.value"></ngb-highlight></td>
+      </tr>
+      </tbody>
+    </table>
+
   </div>
 </div>

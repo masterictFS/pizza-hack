@@ -74,6 +74,12 @@ export class Pizza {
 
     return 'A ' + this.name + ' pizza is a ' + otherPizza.name + ' with ' + extra + ' and without ' + missing;
   }
+
+  containsAll(search: string): boolean {
+    search = search.toLowerCase();
+    return this.name.toLowerCase().includes(search)
+      || this.toppings.findIndex(t => t.name.toLowerCase().includes(search)) >= 0;
+  }
 }
 
 export class PizzaCompareResult {
