@@ -20,6 +20,7 @@ export class Pizza {
 
   // TODO maybe figure out how to do this properly without the nasty exception
   getPriceForSize(size: string): number {
+    // @ts-ignore
     return this.prices.find(p => p.size === size).price;
   }
 
