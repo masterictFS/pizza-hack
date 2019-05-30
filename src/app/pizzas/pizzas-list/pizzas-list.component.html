@@ -3,10 +3,10 @@
 
     <!--TODO sort using new priority field for toppings names-->
     <form>
-      <div class="form-group form-inline">
+      <div class="form-group">
         <!--TODO for some reason labels don't show up-->
         <label for="search">Search me pls</label>
-        <input class="form-control ml-2" type="text" id="search" [formControl]="filter"/>
+        <input class="form-control" type="text" id="search" [formControl]="filter"/>
       </div>
     </form>
 
@@ -28,7 +28,7 @@
           <ngb-highlight [result]="pizza.name" [term]="filter.value"></ngb-highlight>
         </td>
         <td><ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value"></ngb-highlight></td>
-        <td><ngb-highlight [result]="pizza.getPricesString()" [term]="filter.value"></ngb-highlight></td>
+        <td><ngb-highlight [result]="pizza.prices | pricesToString" [term]="filter.value"></ngb-highlight></td>
       </tr>
       </tbody>
     </table>

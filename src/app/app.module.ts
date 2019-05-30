@@ -19,6 +19,8 @@ import {ToppingsService} from './pizzas/services/toppings.service';
 import { EnumToArrayPipe } from './shared/enum-to-array.pipe';
 import { ToppingsToString } from './shared/toppings-to-string';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { PricesToStringPipe } from './shared/prices-to-string.pipe';
+import {CurrencyPipe, DecimalPipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     PizzasListComponent,
     PizzasCompareComponent,
     EnumToArrayPipe,
-    ToppingsToString
+    ToppingsToString,
+    PricesToStringPipe
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [PizzaService, ToppingsService],
+  providers: [PizzaService, ToppingsService, DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

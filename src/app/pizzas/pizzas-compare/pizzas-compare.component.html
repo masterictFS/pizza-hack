@@ -71,13 +71,17 @@
       </div>
     </div>
   </div>
+
+  <hr>
   <div class="row">
     <div
       class="col-md-12"
       *ngFor="let pizzaCompare of getComparedPizzas(); let i = index">
       <span
-        [style.font-size]="i === 0 ? '1.3em' : 'medium'">
-      {{pizzaCompare.originalPizza.name}}
+        [style.font-size]="i === 0 ? '1.3em' : 'medium'"
+        [style.border]="pizzaCompare.missing.length === 0 && pizzaCompare.extra.length === 0 ? '1px solid red' : ''">
+
+        {{pizzaCompare.originalPizza.name}}
         <span *ngIf="pizzaCompare.missing.length > 0">
           with extra <span style="color:lawngreen">{{pizzaCompare.missing | toppingsToString}}</span>
         </span>

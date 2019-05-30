@@ -30,6 +30,7 @@ export class PizzasListComponent implements OnInit {
     this.pizzaService.getPizzas()
       .subscribe(
         (response) => {
+          response = response.sort((a, b) => a < b ? -1 : +(a > b));
           this.originalPizzas = response;
           this.pizzas = response;
         },
