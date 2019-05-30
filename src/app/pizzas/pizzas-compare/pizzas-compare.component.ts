@@ -71,7 +71,7 @@ export class PizzasCompareComponent implements OnInit {
     this.selectedSize = event.target.value;
   }
 
-  getComparedPizzas() {
+  getComparedPizzas(): PizzaCompareResult[] {
     // getting compare array
     // only consider pizzas which have a price defined for the selected size
     const compare = this.allPizzasList.slice()

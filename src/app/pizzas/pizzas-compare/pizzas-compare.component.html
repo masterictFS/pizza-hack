@@ -61,9 +61,12 @@
       <label for="size">Pick your size</label>
       <div class="input-group">
         <div class="btn-group" role="group" id="size" (click)="setComparisonSize($event)">
-          <button
+          <!--TODO active class doesn't look consistent with user clicks, keep it active if clicking outside-->
+          <button type="button"
             *ngFor="let size of sizeTypes | enumToArray"
-            class="btn btn-primary" value="{{sizeTypes[size]}}">{{size}}</button>
+            class="btn btn-primary"
+            [class.active]="sizeTypes[size] === selectedSize"
+            value="{{sizeTypes[size]}}">{{size}}</button>
         </div>
       </div>
     </div>
@@ -71,8 +74,21 @@
   <div class="row">
     <div
       class="col-md-12"
-      *ngFor="let pizzaCompare of getComparedPizzas()">
-      {{pizzaCompare.printToString()}} - {{pizzaCompare.newPrice}}
+      *ngFor="let pizzaCompare of getComparedPizzas(); let i = index">
+      <span
+        [style.font-size]="i === 0 ? '1.3em' : 'medium'">
+      {{pizzaCompare.originalPizza.name}}
+        <span *ngIf="pizzaCompare.missing.length > 0">
+          with extra <span style="color:lawngreen">{{pizzaCompare.missing | toppingsToString}}</span>
+        </span>
+        <span *ngIf="pizzaCompare.missing.length > 0 && pizzaCompare.extra.length > 0">
+          and
+        </span>
+        <span *ngIf="pizzaCompare.extra.length > 0">
+          missing <span style="color:darkred">{{pizzaCompare.extra | toppingsToString}}</span>
+        </span>
+        - {{pizzaCompare.newPrice | currency:'EUR':'symbol'}}
+      </span>
     </div>
   </div>
 

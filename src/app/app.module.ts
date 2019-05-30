@@ -17,6 +17,7 @@ import {FormsModule} from '@angular/forms';
 import {PizzaService} from './pizzas/services/pizza.service';
 import {ToppingsService} from './pizzas/services/toppings.service';
 import { EnumToArrayPipe } from './shared/enum-to-array.pipe';
+import { ToppingsToString } from './shared/toppings-to-string';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { EnumToArrayPipe } from './shared/enum-to-array.pipe';
     ErrorPageComponent,
     PizzasListComponent,
     PizzasCompareComponent,
-    EnumToArrayPipe
+    EnumToArrayPipe,
+    ToppingsToString
   ],
   imports: [
     BrowserModule,
