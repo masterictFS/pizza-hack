@@ -14,8 +14,8 @@ export class Pizza {
     return new Pizza(pizza.id, pizza.name, Topping.createToppingObjsFromArray(pizza.toppings), PizzaPrice.createPriceObjs(pizza.prices));
   }
 
-  getToppingsNames(): string[] {
-    return this.toppings.map(t => t.name);
+  static comparePizzasByName(a: Pizza, b: Pizza): number {
+    return a.name < b.name ? -1 : +(a.name > b.name);
   }
 
   hasPriceForSize(size: string): boolean {
@@ -27,12 +27,6 @@ export class Pizza {
   getPriceForSize(size: string): number {
     // @ts-ignore
     return this.prices.find(p => p.size === size).price;
-  }
-
-  getPricesString(): string[] {
-    const pricesToBeSorted = this.prices.slice();
-    pricesToBeSorted.sort((a, b) => PizzaPrice.sizeComparator(a, b));
-    return pricesToBeSorted.map(p => p.size + ': ' + p.price);
   }
 
   addTopping(topping: Topping): number {
@@ -67,14 +61,6 @@ export class Pizza {
     );
   }
 
-  comparisonString(otherPizza: Pizza): string {
-    const comparison = this.compareToOther(otherPizza);
-    const extra = JSON.stringify(comparison.extra);
-    const missing = JSON.stringify(comparison.missing);
-
-    return 'A ' + this.name + ' pizza is a ' + otherPizza.name + ' with ' + extra + ' and without ' + missing;
-  }
-
   containsAll(search: string): boolean {
     search = search.toLowerCase();
     return this.name.toLowerCase().includes(search)
@@ -103,11 +89,5 @@ export class PizzaCompareResult {
       return a.missing.length - b.missing.length;
     }
     return a.extra.length - b.extra.length;
-  }
-
-  printToString(): string {
-    return this.originalPizza.name
-      + ' with extra ' + JSON.stringify(this.missing.map(t => t.name))
-      + ' and without ' + JSON.stringify(this.extra.map(t => t.name));
   }
 }

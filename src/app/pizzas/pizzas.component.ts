@@ -22,7 +22,7 @@ export class PizzasComponent implements OnInit {
     this.pizzaService.getPizzas()
       .subscribe(
         (response) => {
-          response = response.sort((a, b) => a < b ? -1 : +(a > b));
+          response = response.sort(Pizza.comparePizzasByName);
           this.pizzas = response;
           this.originalPizzas = response;
         },
@@ -32,7 +32,7 @@ export class PizzasComponent implements OnInit {
     this.pizzaService.getUserPizzas(5)
       .subscribe(
         (response) => {
-          response = response.sort((a, b) => a < b ? -1 : +(a > b));
+          response = response.sort((a, b) => a.name < b.name ? -1 : +(a.name > b.name));
           this.userPizzas = response;
           this.originalUserPizzas = response;
         },
