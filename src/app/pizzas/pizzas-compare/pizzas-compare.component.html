@@ -18,25 +18,25 @@
       </div>
     </div>
   </div>
-  <div class="row ">
+  <div class="row" *ngIf="getUnusedToppings().length > 0">
     <div class="col-md-12">
-    <form (ngSubmit)="onAddIngredient()" #form="ngForm">
-      <label for="topping">New Topping</label>
-      <div class="input-group center">
-        <select
-          class="form-control tc f4 b "
-          id="topping"
-          name="topping"
-          required
-          ngModel>
-          <option *ngFor="let topping of getUnusedToppings()" value="{{topping.id}}">{{topping.name}}</option>
-        </select>
-      </div>
-<br>
-      <span class="input-group-btn f3 b lh-title mb1 f2 b lh-title mt0 mb2 tc">
-        <button type="submit" class="btn bn raise" [disabled]="!form.valid">Aggiungi ingrediente</button>
-      </span>
-    </form>
+      <form (ngSubmit)="onAddIngredient()" #form="ngForm">
+        <label for="topping">New Topping</label>
+        <div class="input-group center">
+          <select
+            class="form-control tc f4 b "
+            id="topping"
+            name="topping"
+            required
+            ngModel>
+            <option *ngFor="let topping of getUnusedToppings()" value="{{topping.id}}">{{topping.name}}</option>
+          </select>
+        </div>
+        <br>
+        <span class="input-group-btn f3 b lh-title mb1 f2 b lh-title mt0 mb2 tc">
+          <button type="submit" class="btn bn raise" [disabled]="!form.valid">Aggiungi ingrediente</button>
+        </span>
+      </form>
     </div>
   </div>
 
