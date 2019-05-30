@@ -73,7 +73,9 @@ export class PizzasCompareComponent implements OnInit {
 
   getComparedPizzas() {
     // getting compare array
+    // only consider pizzas which have a price defined for the selected size
     const compare = this.allPizzasList.slice()
+      .filter(pizza => pizza.hasPriceForSize(Size[this.selectedSize]))
       .map(pizza => pizza.compareToOther(this.pizzaToBeCompared));
 
     // getting new prices based on size, number of extra toppings and extra topping price
