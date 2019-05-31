@@ -82,7 +82,7 @@
       *ngFor="let pizzaCompare of getComparedPizzas(); let i = index">
       <span
         [class.cheapest-pizza]="i===0"
-        [class.same-pizza]="pizzaCompare.missing.length === 0 && pizzaCompare.extra.length === 0 ? '1px solid red' : ''">
+        [class.same-pizza]="pizzaCompare.missing.length === 0 && pizzaCompare.extra.length === 0">
         {{pizzaCompare.originalPizza.name}}
         <span *ngIf="pizzaCompare.missing.length > 0">
           with extra <span style="color:lawngreen">{{pizzaCompare.missing | toppingsToString}}</span>
