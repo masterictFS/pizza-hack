@@ -32,11 +32,24 @@ export class PizzasComponent implements OnInit {
     this.pizzaService.getUserPizzas(5)
       .subscribe(
         (response) => {
-          response = response.sort((a, b) => a.name < b.name ? -1 : +(a.name > b.name));
+          response = response.sort(Pizza.comparePizzasByName);
           this.userPizzas = response;
           this.originalUserPizzas = response;
         },
         (error) => console.log(error)
       );
+
+    // the subject just subscribes to the service again to get user pizzas
+    this.pizzaService.userPizzasUpdated.subscribe(() => {
+      this.pizzaService.getUserPizzas(5)
+        .subscribe(
+          (response) => {
+            response = response.sort(Pizza.comparePizzasByName);
+            this.userPizzas = response;
+            this.originalUserPizzas = response;
+          },
+          (error) => console.log(error)
+        );
+    });
   }
 }

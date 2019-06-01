@@ -3,6 +3,7 @@ import {Pizza} from '../models/pizza.model';
 import {ToppingsService} from './toppings.service';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class PizzaService {
@@ -11,6 +12,9 @@ export class PizzaService {
 
   private pizzas: Pizza[];
   private userPizzas: Pizza[];
+
+  // used to notify that user pizzas have been updated and have to be fetched again
+  userPizzasUpdated = new Subject();
 
   getPizzas() {
     return this.http.get<Pizza[]>('http://localhost:8080/pizzas')
