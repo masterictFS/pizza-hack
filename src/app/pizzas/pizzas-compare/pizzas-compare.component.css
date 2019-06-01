@@ -5,3 +5,11 @@
 .same-pizza {
   border: 1px solid red
 }
+
+.extra-ingredient {
+  color: lawngreen;
+}
+
+.missing-ingredient {
+  color: darkred;
+}

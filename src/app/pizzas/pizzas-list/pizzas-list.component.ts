@@ -25,8 +25,9 @@ export class PizzasListComponent {
     );
   }
 
-  openModal(pizza: Pizza) {
-    const modalRef = this.modalService.open(PizzasCompareComponent);
+  openCompareModal(pizza: Pizza) {
+    const modalRef = this.modalService.open(PizzasCompareComponent, { size: 'lg' });
+    // cloning pizza to get a fresh copy, otherwise i'd change the name of the original
     modalRef.componentInstance.setPizza(pizza.clone());
   }
 }
