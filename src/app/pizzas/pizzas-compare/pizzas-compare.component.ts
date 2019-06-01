@@ -2,11 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Pizza, PizzaCompareResult} from '../models/pizza.model';
 import {Size} from '../models/pizza-price.model';
 import {PizzaService} from '../services/pizza.service';
-import {Subscription} from 'rxjs';
-import {ActivatedRoute, Params} from '@angular/router';
 import {Topping} from '../models/topping.model';
 import {ToppingsService} from '../services/toppings.service';
 import {NgForm} from '@angular/forms';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-pizzas-compare',
@@ -14,7 +13,6 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./pizzas-compare.component.css']
 })
 export class PizzasCompareComponent implements OnInit {
-  paramsSubscription: Subscription;
   @ViewChild('form') ingredientForm: NgForm;
 
   pizzaToBeCompared: Pizza;
@@ -23,18 +21,12 @@ export class PizzasCompareComponent implements OnInit {
   sizeTypes = Size;
 
   extraToppingPrice = 0.5;
-  selectedSize = Size.M;
+  /*selectedSize = Size.M;*/
+  selectedSize: Size;
 
-  constructor(private pizzaService: PizzaService, private toppingsService: ToppingsService, private route: ActivatedRoute) { }
+  constructor(private pizzaService: PizzaService, private toppingsService: ToppingsService, public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    this.paramsSubscription = this.route.params.subscribe(
-      (params: Params) => {
-        this.pizzaToBeCompared = this.pizzaService.getPizzaById(+params['id']);
-        this.pizzaToBeCompared.name = this.getNewName();
-      }
-    );
-
     // TODO sort using new priority field
     this.toppingsService.getToppings()
       .subscribe(
@@ -47,6 +39,11 @@ export class PizzasCompareComponent implements OnInit {
         (response) => this.allPizzasList = response,
         (error) => console.log(error)
       );
+  }
+
+  setPizza(pizza: Pizza) {
+    this.pizzaToBeCompared = pizza;
+    this.pizzaToBeCompared.name = this.getNewName();
   }
 
   removeToppingById(id: number) {
@@ -94,6 +91,7 @@ export class PizzasCompareComponent implements OnInit {
       () => this.pizzaService.getPizzas(),
       (error) => console.log(error)
     );
+    this.activeModal.dismiss('save and close');
   }
 
   getNewName(): string {

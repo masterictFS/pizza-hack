@@ -1,37 +1,33 @@
 <div *ngIf="originalPizzas && originalPizzas.length > 0" class="row tc center">
-  <div class="col-xs-12 list-group">
+  <!--TODO sort using new priority field for toppings names-->
+  <form>
+    <div class="form-group">
+      <!--TODO for some reason labels don't show up-->
+      <label for="search">Search me pls</label>
+      <input class="form-control" type="text" id="search" [formControl]="filter"/>
+    </div>
+  </form>
 
-    <!--TODO sort using new priority field for toppings names-->
-    <form>
-      <div class="form-group">
-        <!--TODO for some reason labels don't show up-->
-        <label for="search">Search me pls</label>
-        <input class="form-control" type="text" id="search" [formControl]="filter"/>
-      </div>
-    </form>
-
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Toppings</th>
-        <th *ngIf="isDefaultPizza" scope="col">Prices</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-        *ngFor="let pizza of pizzas; let i = index"
-        style="cursor: pointer"
-        [routerLink]="pizza.id.toString()"
-        routerLinkActive="active">
-        <td>
-          <ngb-highlight [result]="pizza.name" [term]="filter.value"></ngb-highlight>
-        </td>
-        <td><ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value"></ngb-highlight></td>
-        <td *ngIf="isDefaultPizza"><ngb-highlight [result]="pizza.prices | pricesToString" [term]="filter.value"></ngb-highlight></td>
-      </tr>
-      </tbody>
-    </table>
-
-  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Toppings</th>
+      <th *ngIf="isDefaultPizza" scope="col">Prices</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+      *ngFor="let pizza of pizzas; let i = index"
+      style="cursor: pointer"
+      (click)="openModal(pizza)"
+    >
+      <td>
+        <ngb-highlight [result]="pizza.name" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td><ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value"></ngb-highlight></td>
+      <td *ngIf="isDefaultPizza"><ngb-highlight [result]="pizza.prices | pricesToString" [term]="filter.value"></ngb-highlight></td>
+    </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,23 +1,29 @@
 <div
-  *ngIf="pizzaToBeCompared else noPizza"
-  class="col-md-12 row">
-
-  <div class="f3 b lh-title mb1 center tc">
-    <h3>{{pizzaToBeCompared.name}}</h3>
-    <button class="btn btn-success" (click)="savePizza(pizzaToBeCompared)">save me</button>
+  *ngIf="pizzaToBeCompared else noPizza">
+  <div class="modal-header">
+    <div class="modal-title">
+      <div class="f3 b lh-title mb1 center tc">
+        <h3>{{pizzaToBeCompared.name}}</h3>
+      </div>
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 
+<div class="modal-body">
   <div class="row tc center">
     <div class="col-md-12 list-group">
       <div
-        *ngFor="let topping of pizzaToBeCompared.toppings"
-        class="list-group-item clearfix">
+          *ngFor="let topping of pizzaToBeCompared.toppings"
+          class="list-group-item clearfix">
         {{topping.name}}
         <span class="pull-right">
-          <span class="btn btn-xs btn-default" (click)="removeToppingById(topping.id)">
-            <span class="glyphicon glyphicon-remove"></span>
+            <span class="btn btn-xs btn-default" (click)="removeToppingById(topping.id)">
+              <!--<span class="glyphicon glyphicon-remove"></span>-->
+              <span class="fa fa-remove"></span>
+            </span>
           </span>
-        </span>
       </div>
     </div>
   </div>
@@ -27,18 +33,18 @@
         <label for="topping">New Topping</label>
         <div class="input-group center">
           <select
-            class="form-control tc f4 b "
-            id="topping"
-            name="topping"
-            required
-            ngModel>
-            <option *ngFor="let topping of getUnusedToppings()" value="{{topping.id}}">{{topping.name}}</option>
-          </select>
+              class="form-control tc f4 b "
+              id="topping"
+              name="topping"
+              required
+              ngModel>
+              <option *ngFor="let topping of getUnusedToppings()" value="{{topping.id}}">{{topping.name}}</option>
+            </select>
         </div>
         <br>
         <span class="input-group-btn f3 b lh-title mb1 f2 b lh-title mt0 mb2 tc">
-          <button type="submit" class="btn bn raise" [disabled]="!form.valid">Aggiungi ingrediente</button>
-        </span>
+            <button type="submit" class="btn bn raise" [disabled]="!form.valid">Aggiungi ingrediente</button>
+          </span>
       </form>
     </div>
   </div>
@@ -51,54 +57,68 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <label for="extraprice">Extra topping price</label>
       <div class="input-group">
-        <span class="input-group-addon">
-          <i class="glyphicon glyphicon-euro"></i>
-        </span>
-        <input class="form-control" id="extraprice" type="number" [(ngModel)]="extraToppingPrice">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+              <i class="fa fa-euro"></i>
+            </span>
+        </div>
+        <input class="form-control" id="extraprice" type="number" step="any" [(ngModel)]="extraToppingPrice">
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       <label for="size">Pick your size</label>
       <div class="input-group">
         <div class="btn-group" role="group" id="size" (click)="setComparisonSize($event)">
           <!--TODO active class doesn't look consistent with user clicks, keep it active if clicking outside-->
           <button type="button"
-            *ngFor="let size of sizeTypes | enumToArray"
-            class="btn btn-primary"
-            [class.active]="sizeTypes[size] === selectedSize"
-            value="{{sizeTypes[size]}}">{{size}}</button>
+              *ngFor="let size of sizeTypes | enumToArray"
+              class="btn btn-primary"
+              [class.active]="sizeTypes[size] === selectedSize"
+          value="{{sizeTypes[size]}}">{{size}}</button>
         </div>
       </div>
     </div>
+    <div class="col-md-3">
+      <button class="btn btn-success" (click)="savePizza(pizzaToBeCompared)">save me</button>
+    </div>
   </div>
 
-  <hr>
-  <div class="row">
-    <div
-      class="col-md-12"
-      *ngFor="let pizzaCompare of getComparedPizzas(); let i = index">
-      <span
-        [class.cheapest-pizza]="i===0"
-        [class.same-pizza]="pizzaCompare.missing.length === 0 && pizzaCompare.extra.length === 0">
-        {{pizzaCompare.originalPizza.name}}
-        <span *ngIf="pizzaCompare.missing.length > 0">
-          with extra <span style="color:lawngreen">{{pizzaCompare.missing | toppingsToString}}</span>
+    <hr>
+    <div class="row">
+      <div
+        class="col-md-12"
+        *ngFor="let pizzaCompare of getComparedPizzas(); let i = index">
+        <span
+          [class.cheapest-pizza]="i===0"
+          [class.same-pizza]="pizzaCompare.missing.length === 0 && pizzaCompare.extra.length === 0">
+          {{pizzaCompare.originalPizza.name}}
+          <span *ngIf="pizzaCompare.missing.length > 0">
+            with extra <span style="color:lawngreen">{{pizzaCompare.missing | toppingsToString}}</span>
+          </span>
+          <span *ngIf="pizzaCompare.missing.length > 0 && pizzaCompare.extra.length > 0">
+            and
+          </span>
+          <span *ngIf="pizzaCompare.extra.length > 0">
+            without <span style="color:darkred">{{pizzaCompare.extra | toppingsToString}}</span>
+          </span>
+          - {{pizzaCompare.newPrice | currency:'EUR':'symbol'}}
         </span>
-        <span *ngIf="pizzaCompare.missing.length > 0 && pizzaCompare.extra.length > 0">
-          and
-        </span>
-        <span *ngIf="pizzaCompare.extra.length > 0">
-          missing <span style="color:darkred">{{pizzaCompare.extra | toppingsToString}}</span>
-        </span>
-        - {{pizzaCompare.newPrice | currency:'EUR':'symbol'}}
-      </span>
+      </div>
     </div>
   </div>
 
 </div>
 <ng-template #noPizza>
+  <div class="modal-header">
+    <div class="modal-title">
+      Nothin here pardner
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <app-error-page [errorMessage]="'select a pizza to hack luv'"></app-error-page>
 </ng-template>

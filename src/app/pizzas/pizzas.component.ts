@@ -39,5 +39,4 @@ export class PizzasComponent implements OnInit {
         (error) => console.log(error)
       );
   }
-
 }

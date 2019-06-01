@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {Pizza} from '../models/pizza.model';
 import {FormControl} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {PizzasCompareComponent} from '../pizzas-compare/pizzas-compare.component';
 
 @Component({
   selector: 'app-pizzas-list',
@@ -14,12 +16,17 @@ export class PizzasListComponent {
 
   filter = new FormControl('');
 
-  constructor() {
+  constructor(private modalService: NgbModal) {
     this.filter.valueChanges.subscribe(
       (response) => {
         this.pizzas = this.originalPizzas.filter(p => p.containsAll(response));
       },
       (error) => console.log(error)
     );
+  }
+
+  openModal(pizza: Pizza) {
+    const modalRef = this.modalService.open(PizzasCompareComponent);
+    modalRef.componentInstance.setPizza(pizza.clone());
   }
 }

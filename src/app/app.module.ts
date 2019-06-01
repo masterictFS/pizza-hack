@@ -16,11 +16,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PizzaService} from './pizzas/services/pizza.service';
 import {ToppingsService} from './pizzas/services/toppings.service';
-import { EnumToArrayPipe } from './shared/enum-to-array.pipe';
-import { ToppingsToString } from './shared/toppings-to-string';
+import {EnumToArrayPipe} from './shared/enum-to-array.pipe';
+import {ToppingsToString} from './shared/toppings-to-string';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { PricesToStringPipe } from './shared/prices-to-string.pipe';
-import {CurrencyPipe, DecimalPipe} from '@angular/common';
+import {PricesToStringPipe} from './shared/prices-to-string.pipe';
+import {DecimalPipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import {CurrencyPipe, DecimalPipe} from '@angular/common';
     ReactiveFormsModule
   ],
   providers: [PizzaService, ToppingsService, DecimalPipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PizzasCompareComponent]
 })
 export class AppModule { }
