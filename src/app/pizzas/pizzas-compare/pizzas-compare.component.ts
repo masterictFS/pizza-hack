@@ -83,7 +83,8 @@ export class PizzasCompareComponent implements OnInit {
     // sorting on price and least additions
     compare.sort((a, b) => PizzaCompareResult.cheapestLeastAdditions(a, b));
 
-    return compare;
+    // returning only 5 elements to make the list a bit more readable
+    return compare.slice(0, 5);
   }
 
   savePizza(pizza: Pizza) {
