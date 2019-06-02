@@ -5,7 +5,7 @@ export class PizzaPrice {
   ) {}
 
   static createPriceObjs(pizzaPrices: PizzaPrice[]) {
-    return pizzaPrices.map(prices => new PizzaPrice(prices.size, prices.price));
+    return pizzaPrices.map(prices => new PizzaPrice(prices.size, prices.price)).sort(this.sizeComparator);
   }
 
   static sizeComparator(a: PizzaPrice, b: PizzaPrice): number {
