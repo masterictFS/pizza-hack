@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PizzaService} from './services/pizza.service';
 import {Pizza} from './models/pizza.model';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-pizzas',
@@ -29,7 +30,7 @@ export class PizzasComponent implements OnInit {
         (error) => console.log(error)
       );
 
-    this.pizzaService.getUserPizzas(5)
+    this.pizzaService.getUserPizzas(environment.defaultUserId)
       .subscribe(
         (response) => {
           response = response.sort(Pizza.comparePizzasByName);
@@ -41,7 +42,7 @@ export class PizzasComponent implements OnInit {
 
     // the subject just subscribes to the service again to get user pizzas
     this.pizzaService.userPizzasUpdated.subscribe(() => {
-      this.pizzaService.getUserPizzas(5)
+      this.pizzaService.getUserPizzas(environment.defaultUserId)
         .subscribe(
           (response) => {
             response = response.sort(Pizza.comparePizzasByName);

@@ -10,15 +10,8 @@ export class ToppingsService {
 
   constructor(private http: HttpClient) {}
 
-  /*allToppingsList: Topping[] = [
-    new Topping(1, 'Pomodoro'),
-    new Topping(2, 'Mozzarella'),
-    new Topping(3, 'Acciughe'),
-    new Topping(4, 'Prosciutto')
-  ];*/
-
   getToppings() {
-    return this.http.get<Topping[]>('http://localhost:8080/toppings')
+    return this.http.get<Topping[]>('toppings')
       .pipe(map(
         (toppings) => {
           console.log('calling server for allToppingsList lol');

@@ -88,7 +88,7 @@ export class PizzasCompareComponent implements OnInit {
 
   savePizza(pizza: Pizza) {
     this.pizzaService.savePizza(pizza).subscribe(
-      () => this.pizzaService.userPizzasUpdated.next('wololo'),
+      () => this.pizzaService.userPizzasUpdated.next(),
       (error) => console.log(error)
     );
     this.activeModal.dismiss('save and close');

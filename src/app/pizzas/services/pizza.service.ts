@@ -4,20 +4,22 @@ import {ToppingsService} from './toppings.service';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {Subject} from 'rxjs';
+import {environment} from '../../../environments/environment';
+
 
 @Injectable()
 export class PizzaService {
 
-  constructor(private toppingService: ToppingsService, private http: HttpClient) {}
-
   private pizzas: Pizza[];
   private userPizzas: Pizza[];
+
+  constructor(private toppingService: ToppingsService, private http: HttpClient) {}
 
   // used to notify that user pizzas have been updated and have to be fetched again
   userPizzasUpdated = new Subject();
 
   getPizzas() {
-    return this.http.get<Pizza[]>('http://localhost:8080/pizzas')
+    return this.http.get<Pizza[]>('pizzas')
       .pipe(map(
         (pizzas) => {
           const pizzaObjs = pizzas.map(pizza => Pizza.createPizzaObject(pizza));
@@ -28,7 +30,7 @@ export class PizzaService {
   }
 
   getUserPizzas(userId: number) {
-    return this.http.get<Pizza[]>('http://localhost:8080/user_pizzas/' + userId)
+    return this.http.get<Pizza[]>('user_pizzas/' + userId)
       .pipe(map(
         (pizzas) => {
           const pizzaObjs = pizzas.map(pizza => Pizza.createPizzaObject(pizza));
@@ -55,10 +57,10 @@ export class PizzaService {
   }
 
   savePizza(pizza: Pizza) {
-    return this.http.post('http://localhost:8080/pizzas', {
+    return this.http.post('pizzas', {
       'name': pizza.name,
       'toppings_ids': pizza.toppings.map(t => t.id),
-      'user_id': 5
+      'user_id': environment.defaultUserId
     });
   }
 }

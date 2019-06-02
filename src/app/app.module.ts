@@ -12,7 +12,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {ErrorPageComponent} from './error-page/error-page.component';
 import {PizzasListComponent} from './pizzas/pizzas-list/pizzas-list.component';
 import {PizzasCompareComponent} from './pizzas/pizzas-compare/pizzas-compare.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PizzaService} from './pizzas/services/pizza.service';
 import {ToppingsService} from './pizzas/services/toppings.service';
@@ -21,6 +21,7 @@ import {ToppingsToString} from './shared/toppings-to-string';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PricesToStringPipe} from './shared/prices-to-string.pipe';
 import {DecimalPipe} from '@angular/common';
+import {APIInterceptor} from './pizzas/services/APIInterceptor';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,12 @@ import {DecimalPipe} from '@angular/common';
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [PizzaService, ToppingsService, DecimalPipe],
+  providers: [PizzaService, ToppingsService, DecimalPipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: APIInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent],
   entryComponents: [PizzasCompareComponent]
 })
