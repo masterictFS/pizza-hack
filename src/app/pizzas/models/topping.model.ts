@@ -12,4 +12,8 @@ export class Topping {
   static createToppingObj(topping: Topping): Topping {
     return new Topping(topping.id, topping.name);
   }
+
+  static compareToppingsByName(a: Topping, b: Topping): number {
+    return a.name < b.name ? -1 : +(a.name > b.name);
+  }
 }

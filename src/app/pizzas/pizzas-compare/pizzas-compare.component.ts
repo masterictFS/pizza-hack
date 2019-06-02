@@ -30,13 +30,13 @@ export class PizzasCompareComponent implements OnInit {
     // TODO sort using new priority field
     this.toppingsService.getToppings()
       .subscribe(
-        (response) => this.allToppingsList = response,
+        (response) => this.allToppingsList = response.sort(Topping.compareToppingsByName),
         (error) => console.log(error)
       );
 
     this.pizzaService.getPizzas()
       .subscribe(
-        (response) => this.allPizzasList = response,
+        (response) => this.allPizzasList = response.sort(Pizza.comparePizzasByName),
         (error) => console.log(error)
       );
   }
