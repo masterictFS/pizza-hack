@@ -20,13 +20,12 @@
     <tr
       *ngFor="let pizza of pizzas; let i = index"
       style="cursor: pointer"
-      (click)="openCompareModal(pizza)"
-    >
+      (click)="openCompareModal(pizza)">
       <td>
-        <ngb-highlight [result]="pizza.name" [term]="filter.value"></ngb-highlight>
+        <ngb-highlight [result]="pizza.name" [term]="filter.value.split('+')"></ngb-highlight>
       </td>
-      <td><ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value"></ngb-highlight></td>
-      <td *ngIf="isDefaultPizza"><ngb-highlight [result]="pizza.prices | pricesToString" [term]="filter.value"></ngb-highlight></td>
+      <td><ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value.split('+')"></ngb-highlight></td>
+      <td *ngIf="isDefaultPizza"><ngb-highlight [result]="pizza.prices | pricesToString"></ngb-highlight></td>
     </tr>
     </tbody>
   </table>

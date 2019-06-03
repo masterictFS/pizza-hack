@@ -19,7 +19,7 @@ export class PizzasListComponent {
   constructor(private modalService: NgbModal) {
     this.filter.valueChanges.subscribe(
       (response) => {
-        this.pizzas = this.originalPizzas.filter(p => p.containsAll(response));
+        this.pizzas = this.originalPizzas.filter(p => p.containsAllMulti(response.split('+')));
       },
       (error) => console.log(error)
     );

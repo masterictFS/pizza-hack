@@ -61,6 +61,10 @@ export class Pizza {
     );
   }
 
+  containsAllMulti(searchTerms: string[]): boolean {
+    return searchTerms.every(term => this.containsAll(term));
+  }
+
   containsAll(search: string): boolean {
     search = search.toLowerCase();
     return this.name.toLowerCase().includes(search)
