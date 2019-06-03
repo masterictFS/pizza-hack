@@ -6,7 +6,6 @@ import {HeaderComponent} from './header/header.component';
 import {BannerComponent} from './banner/banner.component';
 import {FooterComponent} from './footer/footer.component';
 import {GridComponent} from './grid/grid.component';
-import {DropdownDirective} from './shared/dropdown.directive';
 import {PizzasComponent} from './pizzas/pizzas.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ErrorPageComponent} from './error-page/error-page.component';
@@ -30,7 +29,6 @@ import {APIInterceptor} from './pizzas/services/APIInterceptor';
     BannerComponent,
     FooterComponent,
     GridComponent,
-    DropdownDirective,
     PizzasComponent,
     ErrorPageComponent,
     PizzasListComponent,
