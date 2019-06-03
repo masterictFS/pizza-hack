@@ -21,6 +21,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PricesToStringPipe} from './shared/prices-to-string.pipe';
 import {DecimalPipe} from '@angular/common';
 import {APIInterceptor} from './pizzas/services/APIInterceptor';
+import { ClickStopPropagationDirective } from './shared/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {APIInterceptor} from './pizzas/services/APIInterceptor';
     PizzasCompareComponent,
     EnumToArrayPipe,
     ToppingsToString,
-    PricesToStringPipe
+    PricesToStringPipe,
+    ClickStopPropagationDirective
   ],
   imports: [
     BrowserModule,

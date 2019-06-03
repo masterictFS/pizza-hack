@@ -63,4 +63,8 @@ export class PizzaService {
       'user_id': environment.defaultUserId
     });
   }
+
+  deletePizzaById(id: number) {
+    return this.http.delete('pizzas/' + id);
+  }
 }
