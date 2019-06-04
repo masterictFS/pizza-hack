@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from '@angular/router';
+import {PizzaPlaceService} from '../pizzas/services/pizza-place.service';
+import {PizzaPlace} from '../pizzas/models/pizza-place.model';
 
 @Component({
   selector: 'app-error-page',
@@ -8,8 +10,9 @@ import {ActivatedRoute, Data} from '@angular/router';
 })
 export class ErrorPageComponent implements OnInit {
   @Input() errorMessage: string;
+  pizzaPlaces: PizzaPlace[] = [];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private pizzaPlaceService: PizzaPlaceService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe((data: Data) => {
@@ -17,6 +20,11 @@ export class ErrorPageComponent implements OnInit {
         this.errorMessage = data['message'];
       }
     });
+
+    this.pizzaPlaceService.getPizzaPlaces().subscribe(
+      (response) => this.pizzaPlaces = response,
+      (error) => console.log(error)
+    );
   }
 
 }
