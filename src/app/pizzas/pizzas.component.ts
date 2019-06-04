@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PizzaService} from './services/pizza.service';
 import {Pizza} from './models/pizza.model';
 import {environment} from '../../environments/environment';
@@ -10,6 +10,9 @@ import {environment} from '../../environments/environment';
 })
 export class PizzasComponent implements OnInit {
 
+  @Input()
+  pizzaPlaceTag: string;
+
   originalPizzas: Pizza[];
   pizzas: Pizza[];
 
@@ -20,7 +23,7 @@ export class PizzasComponent implements OnInit {
 
   ngOnInit() {
     // TODO sort using new priority field
-    this.pizzaService.getPizzas()
+    this.pizzaService.getPizzas(this.pizzaPlaceTag)
       .subscribe(
         (response) => {
           response = response.sort(Pizza.comparePizzasByName);
@@ -30,7 +33,7 @@ export class PizzasComponent implements OnInit {
         (error) => console.log(error)
       );
 
-    this.pizzaService.getUserPizzas(environment.defaultUserId)
+    this.pizzaService.getUserPizzas(this.pizzaPlaceTag, environment.defaultUserId)
       .subscribe(
         (response) => {
           response = response.sort(Pizza.comparePizzasByName);
@@ -42,7 +45,7 @@ export class PizzasComponent implements OnInit {
 
     // the subject just subscribes to the service again to get user pizzas
     this.pizzaService.userPizzasUpdated.subscribe(() => {
-      this.pizzaService.getUserPizzas(environment.defaultUserId)
+      this.pizzaService.getUserPizzas(this.pizzaPlaceTag, environment.defaultUserId)
         .subscribe(
           (response) => {
             response = response.sort(Pizza.comparePizzasByName);

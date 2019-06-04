@@ -22,6 +22,8 @@ import {PricesToStringPipe} from './shared/prices-to-string.pipe';
 import {DecimalPipe} from '@angular/common';
 import {APIInterceptor} from './pizzas/services/APIInterceptor';
 import { ClickStopPropagationDirective } from './shared/click-stop-propagation.directive';
+import { PizzaPlacesComponent } from './pizza-places/pizza-places.component';
+import {PizzaPlaceService} from './pizzas/services/pizza-place.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { ClickStopPropagationDirective } from './shared/click-stop-propagation.d
     EnumToArrayPipe,
     ToppingsToString,
     PricesToStringPipe,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    PizzaPlacesComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ import { ClickStopPropagationDirective } from './shared/click-stop-propagation.d
     NgbModule,
     ReactiveFormsModule
   ],
-  providers: [PizzaService, ToppingsService, DecimalPipe,
+  providers: [PizzaPlaceService, PizzaService, ToppingsService, DecimalPipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,

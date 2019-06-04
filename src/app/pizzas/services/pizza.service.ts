@@ -18,8 +18,8 @@ export class PizzaService {
   // used to notify that user pizzas have been updated and have to be fetched again
   userPizzasUpdated = new Subject();
 
-  getPizzas() {
-    return this.http.get<Pizza[]>('pizzas')
+  getPizzas(pizzaPlaceTag: string) {
+    return this.http.get<Pizza[]>(pizzaPlaceTag + '/pizzas')
       .pipe(map(
         (pizzas) => {
           const pizzaObjs = pizzas.map(pizza => Pizza.createPizzaObject(pizza));
@@ -29,8 +29,8 @@ export class PizzaService {
       ));
   }
 
-  getUserPizzas(userId: number) {
-    return this.http.get<Pizza[]>('user_pizzas/' + userId)
+  getUserPizzas(pizzaPlaceTag: string, userId: number) {
+    return this.http.get<Pizza[]>(pizzaPlaceTag + '/user_pizzas/' + userId)
       .pipe(map(
         (pizzas) => {
           const pizzaObjs = pizzas.map(pizza => Pizza.createPizzaObject(pizza));
@@ -57,7 +57,7 @@ export class PizzaService {
   }
 
   savePizza(pizza: Pizza) {
-    return this.http.post('pizzas', {
+    return this.http.post('PZZA_OUT/pizzas', {
       'name': pizza.name,
       'toppings_ids': pizza.toppings.map(t => t.id),
       'user_id': environment.defaultUserId
