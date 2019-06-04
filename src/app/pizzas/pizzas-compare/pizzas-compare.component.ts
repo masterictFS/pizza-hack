@@ -6,6 +6,7 @@ import {Topping} from '../models/topping.model';
 import {ToppingsService} from '../services/toppings.service';
 import {NgForm} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {PizzaPlaceService} from '../services/pizza-place.service';
 
 @Component({
   selector: 'app-pizzas-compare',
@@ -14,6 +15,8 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class PizzasCompareComponent implements OnInit {
   @ViewChild('form') ingredientForm: NgForm;
+
+  pizzaPlaceTag: string;
 
   pizzaToBeCompared: Pizza;
   allPizzasList: Pizza[] = [];
@@ -24,9 +27,15 @@ export class PizzasCompareComponent implements OnInit {
   /*selectedSize = Size.M;*/
   selectedSize: Size;
 
-  constructor(private pizzaService: PizzaService, private toppingsService: ToppingsService, public activeModal: NgbActiveModal) { }
+  constructor(
+    private pizzaPlaceService: PizzaPlaceService,
+    private pizzaService: PizzaService,
+    private toppingsService: ToppingsService,
+    public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
+    this.pizzaPlaceService.currentPizzaPlaceTag.subscribe(tag => this.pizzaPlaceTag = tag);
+
     // TODO sort using new priority field
     this.toppingsService.getToppings()
       .subscribe(
@@ -34,7 +43,7 @@ export class PizzasCompareComponent implements OnInit {
         (error) => console.log(error)
       );
 
-    this.pizzaService.getPizzas()
+    this.pizzaService.getPizzas(this.pizzaPlaceTag)
       .subscribe(
         (response) => this.allPizzasList = response.sort(Pizza.comparePizzasByName),
         (error) => console.log(error)

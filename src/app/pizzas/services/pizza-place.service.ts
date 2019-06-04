@@ -2,11 +2,14 @@ import {Injectable} from '@angular/core';
 import {PizzaPlace} from '../models/pizza-place.model';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class PizzaPlaceService {
 
   private pizzaPlaces: PizzaPlace[] = [];
+  private pizzaPlaceTag = new BehaviorSubject('DEFAULT_TAG');
+  currentPizzaPlaceTag = this.pizzaPlaceTag.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -30,5 +33,9 @@ export class PizzaPlaceService {
           return pizzaPlacesObjs;
         }
       ));
+  }
+
+  changePizzaPlaceTag(newTag: string) {
+    this.pizzaPlaceTag.next(newTag);
   }
 }
