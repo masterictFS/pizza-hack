@@ -6,7 +6,6 @@ import {HeaderComponent} from './header/header.component';
 import {BannerComponent} from './banner/banner.component';
 import {FooterComponent} from './footer/footer.component';
 import {GridComponent} from './grid/grid.component';
-import {DropdownDirective} from './shared/dropdown.directive';
 import {PizzasComponent} from './pizzas/pizzas.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ErrorPageComponent} from './error-page/error-page.component';
@@ -22,6 +21,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PricesToStringPipe} from './shared/prices-to-string.pipe';
 import {DecimalPipe} from '@angular/common';
 import {APIInterceptor} from './pizzas/services/APIInterceptor';
+import { ClickStopPropagationDirective } from './shared/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -30,14 +30,14 @@ import {APIInterceptor} from './pizzas/services/APIInterceptor';
     BannerComponent,
     FooterComponent,
     GridComponent,
-    DropdownDirective,
     PizzasComponent,
     ErrorPageComponent,
     PizzasListComponent,
     PizzasCompareComponent,
     EnumToArrayPipe,
     ToppingsToString,
-    PricesToStringPipe
+    PricesToStringPipe,
+    ClickStopPropagationDirective
   ],
   imports: [
     BrowserModule,

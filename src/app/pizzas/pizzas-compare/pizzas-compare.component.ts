@@ -30,13 +30,13 @@ export class PizzasCompareComponent implements OnInit {
     // TODO sort using new priority field
     this.toppingsService.getToppings()
       .subscribe(
-        (response) => this.allToppingsList = response,
+        (response) => this.allToppingsList = response.sort(Topping.compareToppingsByName),
         (error) => console.log(error)
       );
 
     this.pizzaService.getPizzas()
       .subscribe(
-        (response) => this.allPizzasList = response,
+        (response) => this.allPizzasList = response.sort(Pizza.comparePizzasByName),
         (error) => console.log(error)
       );
   }
@@ -83,7 +83,8 @@ export class PizzasCompareComponent implements OnInit {
     // sorting on price and least additions
     compare.sort((a, b) => PizzaCompareResult.cheapestLeastAdditions(a, b));
 
-    return compare;
+    // returning only 5 elements to make the list a bit more readable
+    return compare.slice(0, 5);
   }
 
   savePizza(pizza: Pizza) {

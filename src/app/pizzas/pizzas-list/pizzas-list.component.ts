@@ -3,6 +3,7 @@ import {Pizza} from '../models/pizza.model';
 import {FormControl} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PizzasCompareComponent} from '../pizzas-compare/pizzas-compare.component';
+import {PizzaService} from '../services/pizza.service';
 
 @Component({
   selector: 'app-pizzas-list',
@@ -16,10 +17,10 @@ export class PizzasListComponent {
 
   filter = new FormControl('');
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private pizzaService: PizzaService) {
     this.filter.valueChanges.subscribe(
       (response) => {
-        this.pizzas = this.originalPizzas.filter(p => p.containsAll(response));
+        this.pizzas = this.originalPizzas.filter(p => p.containsAllMulti(response.split('+')));
       },
       (error) => console.log(error)
     );
@@ -29,5 +30,12 @@ export class PizzasListComponent {
     const modalRef = this.modalService.open(PizzasCompareComponent, { size: 'lg' });
     // cloning pizza to get a fresh copy, otherwise i'd change the name of the original
     modalRef.componentInstance.setPizza(pizza.clone());
+  }
+
+  deletePizzaById(id: number) {
+    this.pizzaService.deletePizzaById(id).subscribe(
+      () => this.pizzaService.userPizzasUpdated.next(),
+      (error) => console.log(error)
+    );
   }
 }
