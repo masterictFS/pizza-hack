@@ -47,7 +47,7 @@
 /* SOCIAL ICON CLASS */
 
 .fa {
-  color: #da533d;
+  color:var(--primary);
 }
 
 .social_link {
@@ -75,7 +75,7 @@
 
 
   .social_link_list {
-    color: #da533d;
+    color: var(--primary);
     font-size: 30px;
   }
 

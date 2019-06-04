@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="getUnusedToppings().length > 0">
+  <div class="row tc" *ngIf="getUnusedToppings().length > 0">
     <div class="col-md-12">
       <form (ngSubmit)="onAddIngredient()" #form="ngForm">
         <label for="topping">New Topping</label>
@@ -42,7 +42,7 @@
         </div>
         <br>
         <span class="input-group-btn f3 b lh-title mb1 f2 b lh-title mt0 mb2 tc">
-            <button type="submit" class="btn bn raise" [disabled]="!form.valid">Aggiungi ingrediente</button>
+            <button type="submit" class="btn btn-success bn w-60 raise tc" [disabled]="!form.valid">Aggiungi ingrediente</button>
           </span>
       </form>
     </div>
@@ -50,13 +50,13 @@
 
 
   <hr>
-  <div class="row">
+  <div class="row tc">
     <div class="col-md-12">
       <h4>Fine-tune your hacks</h4>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4">
+  <div class="row tc">
+    <div class="col-md-12">
       <label for="extraprice">Extra topping price</label>
       <div class="input-group">
         <div class="input-group-prepend">
@@ -67,21 +67,32 @@
         <input class="form-control" id="extraprice" type="number" step="any" [(ngModel)]="extraToppingPrice">
       </div>
     </div>
-    <div class="col-md-4">
-      <label for="size">Pick your size</label>
-      <div class="input-group">
-        <div class="btn-group" role="group" id="size" (click)="setComparisonSize($event)">
-          <!--TODO active class doesn't look consistent with user clicks, keep it active if clicking outside-->
-          <button type="button"
-              *ngFor="let size of sizeTypes | enumToArray"
-              class="btn btn-primary"
-              [class.active]="sizeTypes[size] === selectedSize"
-          value="{{sizeTypes[size]}}">{{size}}</button>
-        </div>
-      </div>
+  </div>
+
+<br>
+<div class="row tc">
+
+<div class="col-md-12">
+  <label for="size">Pick your size</label>
+  <div class="input-group">
+    <div class="btn-group center" role="group" id="size" (click)="setComparisonSize($event)">
+      <!--TODO active class doesn't look consistent with user clicks, keep it active if clicking outside-->
+      <br>
+      <button type="button"
+          *ngFor="let size of sizeTypes | enumToArray"
+          class="btn btn-primary"
+          [class.active]="sizeTypes[size] === selectedSize"
+      value="{{sizeTypes[size]}}">{{size}}</button>
     </div>
-    <div class="col-md-4">
-      <button class="btn btn-success" (click)="savePizza(pizzaToBeCompared)">save me</button>
+  </div>
+</div>
+</div>
+
+<br>
+<div class="row tc">
+
+    <div class="col-md-12">
+      <button class="btn btn-success bn w-60 raise" (click)="savePizza(pizzaToBeCompared)">save me</button>
     </div>
   </div>
 
