@@ -24,6 +24,7 @@ import {APIInterceptor} from './pizzas/services/APIInterceptor';
 import { ClickStopPropagationDirective } from './shared/click-stop-propagation.directive';
 import { PizzaPlacesComponent } from './pizza-places/pizza-places.component';
 import {PizzaPlaceService} from './pizzas/services/pizza-place.service';
+import { MapPizzaPlacesComponent } from './pizza-places/map-pizza-places/map-pizza-places.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {PizzaPlaceService} from './pizzas/services/pizza-place.service';
     ToppingsToString,
     PricesToStringPipe,
     ClickStopPropagationDirective,
-    PizzaPlacesComponent
+    PizzaPlacesComponent,
+    MapPizzaPlacesComponent
   ],
   imports: [
     BrowserModule,
