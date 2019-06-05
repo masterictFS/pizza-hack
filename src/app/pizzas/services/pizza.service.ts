@@ -56,8 +56,8 @@ export class PizzaService {
     }
   }
 
-  savePizza(pizza: Pizza) {
-    return this.http.post('PZZA_OUT/pizzas', {
+  savePizza(pizzaPlaceTag: string, pizza: Pizza) {
+    return this.http.post(pizzaPlaceTag + '/pizzas', {
       'name': pizza.name,
       'toppings_ids': pizza.toppings.map(t => t.id),
       'user_id': environment.defaultUserId

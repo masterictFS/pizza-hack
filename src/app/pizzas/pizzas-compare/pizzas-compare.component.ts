@@ -97,7 +97,7 @@ export class PizzasCompareComponent implements OnInit {
   }
 
   savePizza(pizza: Pizza) {
-    this.pizzaService.savePizza(pizza).subscribe(
+    this.pizzaService.savePizza(this.pizzaPlaceTag, pizza).subscribe(
       () => this.pizzaService.userPizzasUpdated.next(),
       (error) => console.log(error)
     );
