@@ -18,9 +18,9 @@
           *ngFor="let topping of pizzaToBeCompared.toppings"
           class="list-group-item clearfix">
         {{topping.name}}
-        <span class="pull-right">
+        <span class="float-right">
           <span class="btn btn-xs btn-default" (click)="removeToppingById(topping.id)">
-            <span class="fa fa-remove"></span>
+            <span class="fas fa-times"></span>
           </span>
         </span>
       </div>
