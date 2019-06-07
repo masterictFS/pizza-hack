@@ -26,9 +26,9 @@
       </td>
       <td>
         <ngb-highlight [result]="pizza.toppings | toppingsToString" [term]="filter.value.split('+')"></ngb-highlight>
-        <span *ngIf="!isDefaultPizza" class="pull-right">
+        <span *ngIf="!isDefaultPizza" class="float-right">
           <span class="btn btn-xs btn-default" (click)="deletePizzaById(pizza.id)" appClickStopPropagation>
-            <span class="fa fa-remove"></span>
+            <span class="fas fa-times"></span>
           </span>
         </span>
       </td>
